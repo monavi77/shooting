@@ -48,12 +48,15 @@ export default function Home() {
           style={{ y: backgroundY }}
           className="absolute inset-0 z-0"
         >
-          <div 
-            className="absolute inset-0 bg-cover bg-center"
-            style={{
-              backgroundImage: `url('https://images.unsplash.com/photo-1595590424283-b8f17842773f?w=1920&q=80')`,
-            }}
-          />
+          {/* Background VIDEO */}
+         <video
+           className="absolute inset-0 w-full h-full object-cover"
+           src="/shooter.mp4"
+           autoPlay
+           loop
+           muted
+           playsInline
+         />
           <div className="absolute inset-0 bg-gradient-to-b from-[#2B2B2B]/60 via-[#2B2B2B]/40 to-[#FAFAF7]" />
         </motion.div>
 
