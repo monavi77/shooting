@@ -57,7 +57,7 @@ export default function Home() {
            muted
            playsInline
          />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#2B2B2B]/60 via-[#2B2B2B]/40 to-[#FAFAF7]" />
+           <div className="absolute inset-0 bg-gradient-to-b from-[#000000]/60 via-[#000000]/40 to-[#000000]" />
         </motion.div>
 
         {/* Hero Content */}
