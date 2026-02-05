@@ -25,6 +25,10 @@ export default function Layout({ children, currentPageName }) {
 
   const getLink = (page) => (page === '/' ? '/' : createPageUrl(page));
 
+  // determine active page
+  const isActive = (itemPage) =>
+    itemPage === '/' ? currentPageName === 'Home' : currentPageName === itemPage;
+
   return (
     <div className="min-h-screen bg-[#FAFAF7]">
       {/* Navigation */}
@@ -57,7 +61,7 @@ export default function Layout({ children, currentPageName }) {
                 >
                   <span
                     className={`text-sm font-medium transition-colors duration-200 ${
-                      currentPageName === item.page
+                      isActive(item.page)
                         ? 'text-[#F56600]'
                         : 'text-[#2B2B2B]/70 hover:text-[#2B2B2B]'
                     }`}
@@ -67,7 +71,7 @@ export default function Layout({ children, currentPageName }) {
                   <motion.div
                     className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#F56600] origin-left"
                     initial={{ scaleX: 0 }}
-                    animate={{ scaleX: currentPageName === item.page ? 1 : 0 }}
+                    animate={{ scaleX: isActive(item.page) ? 1 : 0 }}
                     whileHover={{ scaleX: 1 }}
                     transition={{ duration: 0.2 }}
                   />
@@ -83,6 +87,92 @@ export default function Layout({ children, currentPageName }) {
                 </motion.button>
               </Link>
             </div>
+
+            {/* Mobile Menu Button */}
+            <button
+              className="md:hidden p-2"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              {mobileMenuOpen ? (
+                <X className="w-6 h-6 text-[#2B2B2B]" />
+              ) : (
+                <Menu className="w-6 h-6 text-[#2B2B2B]" />
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Menu */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="md:hidden bg-white border-t border-[#EAE6C3]"
+            >
+              <div className="px-6 py-4 space-y-3">
+                {navItems.map((item) => (
+                  <Link
+                    key={item.page}
+                    to={getLink(item.page)}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`block py-2 text-base font-medium ${
+                      isActive(item.page)
+                        ? 'text-[#F56600]'
+                        : 'text-[#2B2B2B]/70'
+                    }`}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+                <Link
+                  to={getLink('Classes')}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block"
+                >
+                  <button className="w-full bg-[#F56600] text-white py-3 rounded-full text-sm font-medium mt-2">
+                    Book a Class
+                  </button>
+                </Link>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.nav>
+
+      {/* Page Content */}
+      <main>{children}</main>
+
+      {/* Footer */}
+      <footer className="bg-[#2B2B2B] text-white py-12 mt-20">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+            <div className="flex items-center gap-2">
+              <Target className="w-6 h-6 text-[#F56600]" />
+              <span className="text-lg font-bold">TrapSchool</span>
+            </div>
+            <div className="flex gap-8 text-sm text-white/60">
+              {navItems.map((item) => (
+                <Link
+                  key={item.page}
+                  to={getLink(item.page)}
+                  className="hover:text-white transition-colors"
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </div>
+            <p className="text-sm text-white/40">
+              © 2024 TrapSchool. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
+
 
             {/* Mobile Menu Button */}
             <button
