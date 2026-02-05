@@ -52,7 +52,7 @@ export default function Layout({ children, currentPageName }) {
             <div className="hidden md:flex items-center gap-8">
               {navItems.map((item) => (
                 <Link
-                  key={item.page}
+                  key={item.name}
                   to={createPageUrl(item.page)}
                   className="relative group"
                 >
