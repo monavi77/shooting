@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Target } from 'lucide-react';
 
 const navItems = [
-  { name: 'Home', page: 'Home' },
+  { name: 'Home', page: '/' },
   { name: 'What Is Trap', page: 'WhatIsTrap' },
   { name: 'How to Aim', page: 'HowToAim' },
   { name: 'Classes', page: 'Classes' },
