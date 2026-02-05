@@ -23,6 +23,8 @@ export default function Layout({ children, currentPageName }) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const getLink = (page) => (page === '/' ? '/' : createPageUrl(page));
+
   return (
     <div className="min-h-screen bg-[#FAFAF7]">
       {/* Navigation */}
@@ -36,11 +38,8 @@ export default function Layout({ children, currentPageName }) {
         <div className="max-w-6xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <Link to={createPageUrl('Home')} className="flex items-center gap-2 group">
-              <motion.div
-                whileHover={{ rotate: 90 }}
-                transition={{ duration: 0.3 }}
-              >
+            <Link to="/" className="flex items-center gap-2 group">
+              <motion.div whileHover={{ rotate: 90 }} transition={{ duration: 0.3 }}>
                 <Target className="w-8 h-8 text-[#F56600]" />
               </motion.div>
               <span className="text-xl font-bold text-[#2B2B2B]">
@@ -53,14 +52,16 @@ export default function Layout({ children, currentPageName }) {
               {navItems.map((item) => (
                 <Link
                   key={item.name}
-                  to={createPageUrl(item.page)}
+                  to={getLink(item.page)}
                   className="relative group"
                 >
-                  <span className={`text-sm font-medium transition-colors duration-200 ${
-                    currentPageName === item.page 
-                      ? 'text-[#F56600]' 
-                      : 'text-[#2B2B2B]/70 hover:text-[#2B2B2B]'
-                  }`}>
+                  <span
+                    className={`text-sm font-medium transition-colors duration-200 ${
+                      currentPageName === item.page
+                        ? 'text-[#F56600]'
+                        : 'text-[#2B2B2B]/70 hover:text-[#2B2B2B]'
+                    }`}
+                  >
                     {item.name}
                   </span>
                   <motion.div
@@ -72,7 +73,7 @@ export default function Layout({ children, currentPageName }) {
                   />
                 </Link>
               ))}
-              <Link to={createPageUrl('Classes')}>
+              <Link to={getLink('Classes')}>
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -110,19 +111,19 @@ export default function Layout({ children, currentPageName }) {
                 {navItems.map((item) => (
                   <Link
                     key={item.page}
-                    to={createPageUrl(item.page)}
+                    to={getLink(item.page)}
                     onClick={() => setMobileMenuOpen(false)}
                     className={`block py-2 text-base font-medium ${
-                      currentPageName === item.page 
-                        ? 'text-[#F56600]' 
+                      currentPageName === item.page
+                        ? 'text-[#F56600]'
                         : 'text-[#2B2B2B]/70'
                     }`}
                   >
                     {item.name}
                   </Link>
                 ))}
-                <Link 
-                  to={createPageUrl('Classes')}
+                <Link
+                  to={getLink('Classes')}
                   onClick={() => setMobileMenuOpen(false)}
                   className="block"
                 >
@@ -151,7 +152,7 @@ export default function Layout({ children, currentPageName }) {
               {navItems.map((item) => (
                 <Link
                   key={item.page}
-                  to={createPageUrl(item.page)}
+                  to={getLink(item.page)}
                   className="hover:text-white transition-colors"
                 >
                   {item.name}
@@ -167,4 +168,3 @@ export default function Layout({ children, currentPageName }) {
     </div>
   );
 }
-
